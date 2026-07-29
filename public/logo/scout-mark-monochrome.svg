@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 100 100"
+  role="img"
+  aria-labelledby="title desc">
+  <title id="title">Scout Labs mark</title>
+  <desc id="desc">A geometric Scout Labs mark with a faceted three-dimensional center diamond.</desc>
+
+  <path fill="currentColor" d="
+    M50 5
+    L96 85
+    L78 77
+    L50 30
+    L22 77
+    L4 85
+    Z
+  "/>
+
+  <g>
+    <path d="M50 55 L38 76 L50 76 Z" fill="currentColor" opacity=".72"/>
+    <path d="M50 55 L62 76 L50 76 Z" fill="currentColor"/>
+    <path d="M38 76 L50 97 L50 76 Z" fill="currentColor" opacity=".9"/>
+    <path d="M62 76 L50 97 L50 76 Z" fill="currentColor" opacity=".58"/>
+  </g>
+</svg>

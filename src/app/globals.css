@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+:root {
+  /* Warm-neutral paper tones, not cool SaaS-slate. */
+  --background: #fafaf9;
+  --foreground: #1a1d1f;
+  --muted: #52565c;
+  --muted-subtle: #83878d;
+  --border: #e3e1dc;
+  --border-strong: #d4d1c9;
+  --surface: #f0ede6;
+  --surface-strong: #e8e4db;
+
+  /* Confident, deliberately deep navy — matches the approved logo navy. */
+  --accent: #18324a;
+  --accent-hover: #122638;
+  --accent-subtle: #e8eef5;
+
+  /* Restrained warm support tone, used sparingly for approachability. */
+  --warm: #b8734f;
+  --warm-subtle: #f4e8de;
+
+  /* Approved brand sage. Semantic, not decorative: reserved for the logo mark, the "Labs" wordmark segment, and — deliberately restrained — markers for optimized states, destination points, and confirmed outcomes elsewhere on the page. Not for backgrounds, body text, headings, or nav: it doesn't meet AA contrast at small sizes, which is standard practice for logotypes and indicator marks, not running text. */
+  --scout-green: #6d8f79;
+
+  --shadow-soft: 0 1px 2px rgba(26, 29, 31, 0.04), 0 8px 24px rgba(26, 29, 31, 0.06);
+  --shadow-soft-lg: 0 4px 8px rgba(26, 29, 31, 0.04), 0 16px 40px rgba(26, 29, 31, 0.08);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-subtle: var(--muted-subtle);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-subtle: var(--accent-subtle);
+  --color-warm: var(--warm);
+  --color-warm-subtle: var(--warm-subtle);
+  --color-scout-green: var(--scout-green);
+  --shadow-soft: var(--shadow-soft);
+  --shadow-soft-lg: var(--shadow-soft-lg);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-plex-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+@layer components {
+  /* Small uppercase labels: eyebrows, tags, functional text. Restrained tracking, never the wordmark's width. */
+  .eyebrow {
+    @apply text-sm font-medium uppercase tracking-wide text-accent;
+  }
+
+  /* Brand wordmark only — moderately expanded tracking per the approved type direction. */
+  .wordmark {
+    @apply font-medium uppercase tracking-[0.045em] text-foreground;
+  }
+
+  /* Hero-level display heading: tightest tracking, largest scale. */
+  .heading-display {
+    @apply text-5xl font-semibold leading-[1.08] tracking-tight text-foreground sm:text-6xl lg:text-7xl;
+  }
+
+  /* Section-level heading (one per section, sentence case). */
+  .heading-section {
+    @apply text-4xl font-semibold tracking-tight text-foreground sm:text-5xl;
+  }
+
+  /* Card/step-level subheading. */
+  .heading-card {
+    @apply text-2xl font-semibold tracking-tight text-foreground;
+  }
+
+  /* Section-intro body copy: generous line height, constrained measure. */
+  .body-copy {
+    @apply max-w-2xl text-lg leading-relaxed text-muted lg:text-xl;
+  }
+
+  /* Supporting copy inside cards/steps, already width-constrained by its parent. */
+  .copy {
+    @apply leading-relaxed text-muted;
+  }
+
+  /* Buttons: rectangular, not pill-shaped — a deliberate move away from generic SaaS chrome. */
+  .btn {
+    @apply outline-none inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+
+  .btn-lg {
+    @apply h-12 px-8 text-base;
+  }
+
+  .btn-sm {
+    @apply px-4 py-2 text-sm;
+  }
+
+  .btn-primary {
+    @apply bg-accent text-white hover:bg-accent-hover hover:shadow-soft active:bg-accent-hover;
+  }
+
+  .btn-secondary {
+    @apply border-2 border-border-strong bg-surface text-foreground hover:border-accent/50 hover:bg-accent-subtle active:border-accent/50 active:bg-accent-subtle;
+  }
+
+  /* Text links (nav, footer): underline on interaction rather than a color-only swap, plus a real focus state. */
+  .nav-link {
+    @apply outline-none rounded-sm text-sm text-muted underline decoration-transparent decoration-2 underline-offset-4 transition-colors hover:text-foreground hover:decoration-border-strong focus-visible:text-foreground focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+
+  /* Numbered node used by the two connected-process layouts (Services, How We Work). Sits on top of a connecting line. */
+  .step-node {
+    @apply relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-accent/25 bg-background font-mono text-sm font-medium text-accent;
+  }
+
+  /* Same slot as .step-node, for the one destination/optimized stage in each sequence — the faceted diamond replaces the circle rather than sitting alongside it. */
+  .step-node-diamond {
+    @apply relative z-10 flex h-10 w-10 shrink-0 items-center justify-center bg-background;
+  }
+}
+
+/* Hero diagram: the clean path draws itself in once. Subtle, single-shot — not a loop. */
+.workflow-draw {
+  stroke-dasharray: 340;
+  stroke-dashoffset: 340;
+  animation: workflow-draw 1.3s 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes workflow-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 620 150"
+  role="img"
+  aria-labelledby="title desc">
+  <title id="title">Scout Labs horizontal logo</title>
+  <desc id="desc">Scout Labs mark with a faceted center diamond, uppercase wordmark, and tagline.</desc>
+
+  <g transform="translate(18 20) scale(1.08)">
+    <path fill="#6D8F79" d="
+      M50 5
+      L96 85
+      L78 77
+      L50 30
+      L22 77
+      L4 85
+      Z
+    "/>
+    <g>
+      <path d="M50 55 L38 76 L50 76 Z" fill="#789B84"/>
+      <path d="M50 55 L62 76 L50 76 Z" fill="#8BAA94"/>
+      <path d="M38 76 L50 97 L50 76 Z" fill="#6D8F79"/>
+      <path d="M62 76 L50 97 L50 76 Z" fill="#587463"/>
+    </g>
+  </g>
+
+  <text x="150" y="73"
+    font-family="Inter, Arial, sans-serif"
+    font-size="48"
+    font-weight="500"
+    letter-spacing="5">
+    <tspan fill="#18324A">SCOUT</tspan>
+    <tspan fill="#6D8F79"> LABS</tspan>
+  </text>
+
+  <text x="153" y="108"
+    fill="#18324A"
+    font-family="Inter, Arial, sans-serif"
+    font-size="13"
+    font-weight="500"
+    letter-spacing="4">
+    CLARITY. DIRECTION. INTELLIGENCE.
+  </text>
+</svg>

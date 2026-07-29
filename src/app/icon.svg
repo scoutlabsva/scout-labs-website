@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 128 128"
+  role="img"
+  aria-label="Scout Labs">
+  <rect width="128" height="128" rx="24" fill="#18324A"/>
+  <path fill="#6D8F79" d="
+    M64 19
+    L108 96
+    L91 89
+    L64 43
+    L37 89
+    L20 96
+    Z
+  "/>
+  <g>
+    <path d="M64 67 L53 86 L64 86 Z" fill="#789B84"/>
+    <path d="M64 67 L75 86 L64 86 Z" fill="#8BAA94"/>
+    <path d="M53 86 L64 105 L64 86 Z" fill="#6D8F79"/>
+    <path d="M75 86 L64 105 L64 86 Z" fill="#587463"/>
+  </g>
+</svg>
