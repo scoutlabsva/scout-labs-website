@@ -131,16 +131,21 @@ body {
   }
 }
 
-/* Hero diagram: the clean path draws itself in once. Subtle, single-shot — not a loop. */
-.workflow-draw {
-  stroke-dasharray: 340;
-  stroke-dashoffset: 340;
-  animation: workflow-draw 1.3s 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+/* Hero stamp: the verified mark lands once the page settles. Subtle, single-shot — not a loop. */
+.stamp-in {
+  opacity: 0;
+  transform-origin: center;
+  animation: stamp-in 0.6s 0.5s cubic-bezier(0.2, 0.6, 0.3, 1) forwards;
 }
 
-@keyframes workflow-draw {
+@keyframes stamp-in {
+  from {
+    opacity: 0;
+    transform: scale(0.82) rotate(-11deg);
+  }
   to {
-    stroke-dashoffset: 0;
+    opacity: 1;
+    transform: scale(1) rotate(-11deg);
   }
 }
 

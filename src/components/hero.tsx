@@ -1,5 +1,5 @@
 import { hero } from "@/lib/content";
-import { WorkflowDiagram } from "@/components/workflow-diagram";
+import { CarbonCopyStack } from "@/components/carbon-copy-stack";
 import { ScoutChevron } from "@/components/scout-chevron";
 
 export function Hero() {
@@ -33,7 +33,7 @@ export function Hero() {
         </div>
 
         <div className="flex items-center justify-center">
-          <WorkflowDiagram />
+          <CarbonCopyStack />
         </div>
       </div>
     </section>

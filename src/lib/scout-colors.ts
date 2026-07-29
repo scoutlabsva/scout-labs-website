@@ -1,6 +1,6 @@
 /**
  * The approved Scout Mark's fixed sage palette. Single source of truth —
- * scout-mark.tsx, scout-diamond.tsx, and workflow-diagram.tsx all render
+ * scout-mark.tsx and scout-diamond.tsx both render
  * this same faceted diamond at different scales and previously repeated
  * these hex values independently.
  */

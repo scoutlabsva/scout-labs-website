@@ -13,9 +13,9 @@ export const navLinks = [
 
 export const hero = {
   eyebrow: "Scout Labs — Operations Consulting",
-  headline: "Find the hours your business is losing. Get them back.",
+  headline: "Your business may be doing every job twice.",
   subheadline:
-    "We help small businesses across Central Virginia find where time, money, and accuracy are slipping through the cracks—then fix it with better processes, automation, or AI when it actually pays off.",
+    "A customer's name gets typed into three systems. A job gets marked done, then confirmed again by someone else. An invoice gets rebuilt from old emails because nothing was written down right the first time. That's a second business — one that exists only to track the first. We find it and take it apart: a better process first, then automation, and only sometimes, AI.",
   primaryCta: { label: "Get a free assessment", href: "#contact" },
   secondaryCta: { label: "See how we work", href: "#process" },
 } as const;
