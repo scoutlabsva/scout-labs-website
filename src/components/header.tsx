@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { navLinks } from "@/lib/content";
+import { hero, navLinks } from "@/lib/content";
 import { ScoutMark } from "@/components/scout-mark";
 import { ScoutWordmark } from "@/components/scout-wordmark";
 
@@ -23,8 +23,8 @@ export function Header() {
           ))}
         </nav>
 
-        <a href="#contact" className="btn btn-sm btn-primary">
-          Free assessment
+        <a href={hero.primaryCta.href} className="btn btn-sm btn-primary">
+          {hero.primaryCta.label}
         </a>
       </div>
     </header>

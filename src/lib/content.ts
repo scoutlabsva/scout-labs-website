@@ -12,12 +12,29 @@ export const navLinks = [
 ] as const;
 
 export const hero = {
-  eyebrow: "Scout Labs — Operations Consulting",
-  headline: "Your business may be doing every job twice.",
-  subheadline:
-    "A customer's name gets typed into three systems. A job gets marked done, then confirmed again by someone else. An invoice gets rebuilt from old emails because nothing was written down right the first time. That's a second business — one that exists only to track the first. We find it and take it apart: a better process first, then automation, and only sometimes, AI.",
+  eyebrow: "Practical Operations & AI",
+  headlineLines: [
+    "Everyone is talking about AI.",
+    "Few can tell you",
+    "where to start.",
+  ] as const,
+  subhead:
+    "Scout Labs helps owner-led service businesses find the practical starting point. We examine how work gets done, simplify what has become unnecessarily complicated, and use automation or AI only where it creates real value.",
+  principle: "Better process first. Automation where it helps. AI only when it earns its place.",
   primaryCta: { label: "Get a free assessment", href: "#contact" },
   secondaryCta: { label: "See how we work", href: "#process" },
+} as const;
+
+export const hiddenWork = {
+  eyebrow: "The Hidden Work",
+  headline: "The work hiding inside the work.",
+  paragraphs: [
+    "As a business grows, extra work accumulates between the real work—information entered twice, completed jobs checked again, invoices reconstructed from emails, and decisions held together by memory.",
+    "It rarely means the team is doing something wrong. More often, the process and tools have not kept pace with the business.",
+    "Scout Labs finds that hidden work, removes what does not need to be there, and clarifies what should happen next.",
+  ] as const,
+  closing:
+    "That may lead to a better process, straightforward automation, or AI. We recommend the simplest solution that earns its place.",
 } as const;
 
 export const outcomes = {

@@ -2,6 +2,7 @@ import { ContactCTA } from "@/components/contact-cta";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
+import { HiddenWork } from "@/components/hidden-work";
 import { HowWeWork } from "@/components/how-we-work";
 import { Outcomes } from "@/components/outcomes";
 import { Problems } from "@/components/problems";
@@ -13,6 +14,7 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
+        <HiddenWork />
         <Outcomes />
         <Problems />
         <Services />
