@@ -2,11 +2,8 @@ import { ContactCTA } from "@/components/contact-cta";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
-import { HiddenWork } from "@/components/hidden-work";
-import { HowWeWork } from "@/components/how-we-work";
-import { Outcomes } from "@/components/outcomes";
-import { Problems } from "@/components/problems";
-import { Services } from "@/components/services";
+import { WhatWeDo } from "@/components/what-we-do";
+import { WhyScoutLabs } from "@/components/why-scout-labs";
 
 export default function Home() {
   return (
@@ -14,11 +11,8 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <HiddenWork />
-        <Outcomes />
-        <Problems />
-        <Services />
-        <HowWeWork />
+        <WhatWeDo />
+        <WhyScoutLabs />
         <ContactCTA />
       </main>
       <Footer />

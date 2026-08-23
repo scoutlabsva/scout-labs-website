@@ -1,0 +1,43 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "scout-labs-website",
+  "main": "src/worker/index.ts",
+  "compatibility_date": "2026-07-31",
+  "assets": {
+    "directory": "./out",
+    "not_found_handling": "404-page"
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["VoiceReceptionist"]
+    },
+    {
+      "tag": "v2",
+      "deleted_classes": ["VoiceReceptionist"]
+    }
+  ],
+  "analytics_engine_datasets": [
+    { "binding": "EVENTS", "dataset": "scout_labs_events" }
+  ],
+  "d1_databases": [
+    {
+      "binding": "ASSESSMENTS_DB",
+      "database_name": "scout-labs-assessments",
+      "database_id": "ea96f945-5d89-4367-9fdd-602efa956083",
+      "migrations_dir": "./migrations"
+    }
+  ],
+  "ratelimits": [
+    {
+      "name": "EVENTS_RATE_LIMITER",
+      "namespace_id": "1001",
+      "simple": { "limit": 30, "period": 60 }
+    },
+    {
+      "name": "ASSESSMENT_RATE_LIMITER",
+      "namespace_id": "1002",
+      "simple": { "limit": 5, "period": 60 }
+    }
+  ]
+}

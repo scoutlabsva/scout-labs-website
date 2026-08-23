@@ -1,8 +1,8 @@
 /**
  * The approved Scout Mark's fixed sage palette. Single source of truth —
- * scout-mark.tsx and scout-diamond.tsx both render
- * this same faceted diamond at different scales and previously repeated
- * these hex values independently.
+ * scout-mark.tsx and scout-diamond.tsx both render this same faceted
+ * diamond at different scales and previously repeated these hex values
+ * independently.
  */
 export const scoutMarkColors = {
   base: "#6D8F79",

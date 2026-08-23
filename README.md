@@ -15,6 +15,28 @@ Open [http://localhost:3000](http://localhost:3000).
 Other scripts: `npm run build` (production build), `npm run start` (serve
 the production build), `npm run lint` (ESLint).
 
+## Deployment
+
+The site is a static export (`output: "export"` in `next.config.ts`) served
+from Cloudflare Workers via Workers Static Assets — there's no server-side
+Next.js runtime in use (no API routes, server actions, or middleware), so a
+static host is all this needs.
+
+- `npm run preview` — builds and serves the site locally through Wrangler
+  (`wrangler dev`), close to how it behaves in production.
+- `npm run deploy` — builds and publishes to Cloudflare
+  (`wrangler deploy`), updating the live `getscoutlabs.com` site.
+
+Configuration lives in `wrangler.jsonc` (the Worker name, compatibility
+date, and the `out/` assets directory). The production custom domain
+(`getscoutlabs.com`, with `www` redirecting to it) is attached at the
+Cloudflare account level, not in this repo — see the Cloudflare dashboard's
+Workers & Pages → `scout-labs-website` → Settings → Domains & Routes.
+
+Deploying requires being logged in via `npx wrangler login` once per
+machine; credentials are stored outside the repo (`~/.wrangler`), never
+committed.
+
 ## Structure
 
 ```
