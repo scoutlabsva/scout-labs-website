@@ -27,12 +27,23 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="mt-6 flex items-center gap-2.5 border-t border-border pt-4">
-          <ScoutChevron
-            direction="up"
-            className="h-3 w-2.5 shrink-0 text-muted-subtle"
-          />
-          <p className="text-sm text-muted">{footer.copyright}</p>
+        <div className="mt-6 flex flex-col gap-4 border-t border-border pt-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-2.5">
+            <ScoutChevron
+              direction="up"
+              className="h-3 w-2.5 shrink-0 text-muted-subtle"
+            />
+            <p className="text-sm text-muted">{footer.copyright}</p>
+          </div>
+
+          <nav className="flex flex-wrap gap-x-6 gap-y-2" aria-label="Legal">
+            <a href="/privacy" className="nav-link text-xs">
+              Privacy Policy
+            </a>
+            <a href="/terms" className="nav-link text-xs">
+              Terms of Service
+            </a>
+          </nav>
         </div>
 
         <p className="mt-3 max-w-2xl text-xs leading-relaxed text-muted">{privacy.note}</p>
