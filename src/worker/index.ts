@@ -32,6 +32,18 @@ export interface Env {
    * durable, this is a best-effort convenience on top of it.
    */
   RESEND_API_KEY?: string;
+  /**
+   * Twilio credentials for SMS notifications (see docs/research-tracking.md).
+   * Set via `wrangler secret put TWILIO_ACCOUNT_SID` and
+   * `wrangler secret put TWILIO_AUTH_TOKEN`. TWILIO_FROM_NUMBER and
+   * NOTIFY_SMS_TO_NUMBER are plain (non-secret) values in E.164 format
+   * (e.g. "+15551234567"), also set as secrets for simplicity/consistency.
+   * Until all four are set, notifyBySms() is a no-op.
+   */
+  TWILIO_ACCOUNT_SID?: string;
+  TWILIO_AUTH_TOKEN?: string;
+  TWILIO_FROM_NUMBER?: string;
+  NOTIFY_SMS_TO_NUMBER?: string;
 }
 
 const MAX_BODY_BYTES = 4096;
@@ -114,6 +126,7 @@ interface AssessmentSubmission {
   businessName: string;
   email: string;
   phone: string;
+  smsConsent: boolean;
   preferredNextStep: string;
   improveFocus: string;
   businessArea: string;
@@ -140,11 +153,17 @@ function validateAssessment(body: Record<string, unknown>): AssessmentSubmission
 
   if (!isValidEmail(body.email)) return null;
 
+  const phone = cleanString(body.phone, 30);
+  // Consent is only meaningful alongside a phone number to text — never
+  // record it as true without one, regardless of what the client sent.
+  const smsConsent = body.smsConsent === true && phone.length > 0;
+
   return {
     name,
     businessName: cleanString(body.businessName, 200),
     email: body.email,
-    phone: cleanString(body.phone, 30),
+    phone,
+    smsConsent,
     preferredNextStep: body.preferredNextStep,
     improveFocus: body.improveFocus,
     businessArea: body.businessArea,
@@ -180,6 +199,7 @@ async function notifyByEmail(env: Env, submission: AssessmentSubmission): Promis
           `Business: ${submission.businessName || "(not provided)"}`,
           `Email: ${submission.email}`,
           `Phone: ${submission.phone || "(not provided)"}`,
+          submission.phone ? `SMS consent: ${submission.smsConsent ? "yes" : "no"}` : "",
           `Preferred next step: ${submission.preferredNextStep}`,
           "",
           `Most wants to improve: ${submission.improveFocus}`,
@@ -207,6 +227,50 @@ async function notifyByEmail(env: Env, submission: AssessmentSubmission): Promis
   }
 }
 
+async function notifyBySms(env: Env, submission: AssessmentSubmission): Promise<void> {
+  if (
+    !env.TWILIO_ACCOUNT_SID ||
+    !env.TWILIO_AUTH_TOKEN ||
+    !env.TWILIO_FROM_NUMBER ||
+    !env.NOTIFY_SMS_TO_NUMBER
+  ) {
+    return;
+  }
+  try {
+    const body = new URLSearchParams({
+      From: env.TWILIO_FROM_NUMBER,
+      To: env.NOTIFY_SMS_TO_NUMBER,
+      Body: `New assessment request from ${submission.name}${
+        submission.businessName ? ` (${submission.businessName})` : ""
+      } — ${submission.email}. Wants: ${submission.improveFocus}.`,
+    });
+    const response = await fetch(
+      `https://api.twilio.com/2010-04-01/Accounts/${env.TWILIO_ACCOUNT_SID}/Messages.json`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Basic ${btoa(`${env.TWILIO_ACCOUNT_SID}:${env.TWILIO_AUTH_TOKEN}`)}`,
+          "content-type": "application/x-www-form-urlencoded",
+        },
+        body,
+      },
+    );
+    const responseText = await response.text();
+    if (!response.ok) {
+      console.error(`Twilio notification failed: ${response.status} ${responseText}`);
+    } else {
+      // Temporary: log the accepted message's sid/status so a "no text
+      // arrived" report can be cross-referenced against Twilio's own
+      // delivery status (e.g. carrier filtering) rather than assumed to be
+      // a Worker-side failure. Remove once SMS delivery is confirmed stable.
+      console.log(`Twilio accepted message: ${responseText}`);
+    }
+  } catch (err) {
+    // Best-effort notification only — the D1 row is the durable record.
+    console.error("Twilio notification threw", err);
+  }
+}
+
 async function handleAssessment(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
   if (!isSameOrigin(request)) return json({ error: "forbidden" }, 403);
 
@@ -226,11 +290,11 @@ async function handleAssessment(request: Request, env: Env, ctx: ExecutionContex
   try {
     await env.ASSESSMENTS_DB.prepare(
       `INSERT INTO assessments (
-        id, created_at, name, business_name, email, phone, preferred_next_step,
+        id, created_at, name, business_name, email, phone, sms_consent, preferred_next_step,
         improve_focus, business_area, team_size, frustration, additional_context,
         utm_source, utm_medium, utm_campaign, utm_content, utm_term,
         referrer_hostname, landing_pathname
-      ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+      ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
     )
       .bind(
         id,
@@ -239,6 +303,7 @@ async function handleAssessment(request: Request, env: Env, ctx: ExecutionContex
         submission.businessName || null,
         submission.email,
         submission.phone || null,
+        submission.smsConsent ? 1 : 0,
         submission.preferredNextStep,
         submission.improveFocus,
         submission.businessArea,
@@ -259,6 +324,7 @@ async function handleAssessment(request: Request, env: Env, ctx: ExecutionContex
   }
 
   ctx.waitUntil(notifyByEmail(env, submission));
+  ctx.waitUntil(notifyBySms(env, submission));
 
   return json({ success: true });
 }

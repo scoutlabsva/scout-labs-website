@@ -124,6 +124,11 @@ export const assessmentForm = {
       helper: "Optional. Include any additional context or questions that would be helpful before we speak.",
       placeholder: "Anything else you'd like us to know?",
     },
+    smsConsent: {
+      label:
+        "I agree to receive text messages from Scout Labs about my assessment request. Message frequency varies. Message and data rates may apply. Reply STOP to opt out, HELP for help.",
+      phoneRequiredError: "Add a phone number above to receive texts, or uncheck this box.",
+    },
   },
   nextLabel: "Next",
   backLabel: "Back",

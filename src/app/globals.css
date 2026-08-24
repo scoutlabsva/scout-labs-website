@@ -125,6 +125,40 @@ body {
   .step-node {
     @apply relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-accent/25 bg-background font-mono text-sm font-medium text-accent;
   }
+
+  /* Long-form legal copy (Terms, Privacy): a lightweight prose treatment
+     consistent with the rest of the type system, without a typography plugin. */
+  .legal-copy {
+    @apply text-base leading-relaxed text-muted;
+  }
+
+  .legal-copy h2 {
+    @apply mt-10 text-2xl font-semibold tracking-tight text-foreground first:mt-0;
+  }
+
+  .legal-copy h3 {
+    @apply mt-6 text-lg font-semibold tracking-tight text-foreground;
+  }
+
+  .legal-copy p {
+    @apply mt-4;
+  }
+
+  .legal-copy ul {
+    @apply mt-4 list-disc space-y-2 pl-5;
+  }
+
+  .legal-copy li::marker {
+    @apply text-muted-subtle;
+  }
+
+  .legal-copy a {
+    @apply text-accent underline decoration-transparent decoration-2 underline-offset-4 transition-colors hover:decoration-accent/50;
+  }
+
+  .legal-copy strong {
+    @apply font-semibold text-foreground;
+  }
 }
 
 /* Hero illustration: one quiet, single-shot reveal — not a loop, nothing pulses or bounces. */

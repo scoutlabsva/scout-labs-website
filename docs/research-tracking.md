@@ -61,6 +61,21 @@ you'd like to share or ask?" field, added in
 1,500 characters, and never sent to the anonymous Analytics Engine event
 stream.
 
+The `sms_consent` column (added in `migrations/0003_add_sms_consent.sql`,
+`INTEGER`, `1`/`0`) is the durable record of whether a submitter checked the
+SMS opt-in checkbox next to the Phone field on step 2 — the consent language
+and the link to `/terms` (which documents the SMS program) live right there
+at the point of collection, as Twilio's campaign/toll-free verification
+requires. `validateAssessment()` in `src/worker/index.ts` re-derives it
+server-side rather than trusting the client: it's only ever written as `1`
+when both the checkbox was checked *and* a phone number was submitted, so a
+consent record never exists without a number to text. Note that this column
+only records consent — it does not yet trigger anything. Nothing currently
+texts leads back; the only outbound SMS the Worker sends is the internal
+notification in `notifyBySms()` below, to the business owner. If an
+outbound texting flow to leads is built later, `sms_consent` is the gate to
+check before sending.
+
 **Anonymous events (Analytics Engine):** query via the SQL API (Analytics
 Engine has no dashboard browsing UI — it's query-only):
 ```bash
@@ -155,3 +170,28 @@ changes.
 
 Either way, D1 remains the durable record of every submission — a failed or
 delayed email notification never loses data.
+
+## SMS notification on submission
+
+`notifyBySms()` in `src/worker/index.ts` sends a short text (name, business,
+email, and what they want to improve) to a single number after every
+successful D1 write, via `ctx.waitUntil(...)` alongside `notifyByEmail()`.
+
+It uses **Twilio**, called directly over `fetch()` from the Worker — same
+pattern as Resend, no Cloudflare binding involved.
+
+Setup (already done, documented here for reference/rotation):
+
+1. Twilio Console → buy an SMS-capable number (the "from" number).
+2. Grab the Account SID and Auth Token from the Twilio Console dashboard.
+3. Store four values as Workers secrets (`npx wrangler secret put <NAME>`):
+   `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_FROM_NUMBER` (the
+   Twilio number), and `NOTIFY_SMS_TO_NUMBER` (the destination cell number)
+   — all in E.164 format (e.g. `+15551234567`). None of these are
+   `wrangler.jsonc` bindings, so none appear in source control.
+4. Redeploy (`npm run deploy`). The Worker checks that all four are present
+   and is a no-op otherwise.
+
+To change the destination number later, just re-run
+`wrangler secret put NOTIFY_SMS_TO_NUMBER` with the new value and redeploy
+— no code change needed.
