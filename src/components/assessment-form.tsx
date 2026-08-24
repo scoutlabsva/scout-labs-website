@@ -16,6 +16,7 @@ type Step2 = {
   businessName: string;
   email: string;
   phone: string;
+  smsConsent: boolean;
   preferredNextStep: string;
   additionalContext: string;
 };
@@ -30,6 +31,7 @@ const initialStep2: Step2 = {
   businessName: "",
   email: "",
   phone: "",
+  smsConsent: false,
   preferredNextStep: "",
   additionalContext: "",
 };
@@ -84,6 +86,9 @@ export function AssessmentForm({ onSubmitted }: { onSubmitted?: () => void }) {
     if (!step2.name.trim()) errors.name = "Please enter your name.";
     if (!step2.email.trim()) errors.email = "Please enter your email.";
     else if (!EMAIL_PATTERN.test(step2.email.trim())) errors.email = "Please enter a valid email address.";
+    if (step2.smsConsent && !step2.phone.trim()) {
+      errors.phone = assessmentForm.step2.smsConsent.phoneRequiredError;
+    }
     if (!step2.preferredNextStep) errors.preferredNextStep = "Please choose one.";
     setStep2Errors(errors);
     const valid = Object.keys(errors).length === 0;
@@ -120,6 +125,7 @@ export function AssessmentForm({ onSubmitted }: { onSubmitted?: () => void }) {
           businessName: step2.businessName,
           email: step2.email,
           phone: step2.phone,
+          smsConsent: step2.smsConsent,
           preferredNextStep: step2.preferredNextStep,
           additionalContext: step2.additionalContext,
           utmSource: attribution.utmSource,
@@ -237,8 +243,29 @@ export function AssessmentForm({ onSubmitted }: { onSubmitted?: () => void }) {
                 type="tel"
                 value={step2.phone}
                 onChange={(v) => updateStep2("phone", v)}
+                error={step2Errors.phone}
                 autoComplete="tel"
               />
+              <label className="flex items-start gap-2.5 text-sm text-muted">
+                <input
+                  type="checkbox"
+                  name="smsConsent"
+                  checked={step2.smsConsent}
+                  onChange={(e) => updateStep2("smsConsent", e.target.checked)}
+                  className="mt-0.5 h-4 w-4 shrink-0 rounded border-border text-accent outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                />
+                <span>
+                  {assessmentForm.step2.smsConsent.label} See our{" "}
+                  <a href="/terms" className="nav-link">
+                    Terms of Service
+                  </a>{" "}
+                  and{" "}
+                  <a href="/privacy" className="nav-link">
+                    Privacy Policy
+                  </a>
+                  .
+                </span>
+              </label>
               <ChoiceGroup
                 legend={assessmentForm.step2.preferredNextStep.question}
                 name="preferredNextStep"
