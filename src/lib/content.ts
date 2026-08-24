@@ -11,10 +11,15 @@ export const share = {
   text: "Scout Labs helps growing, owner-led businesses use AI and automation to increase sales, reduce operating costs, and serve customers better.",
 } as const;
 
+// Root-relative ("/#section") rather than bare "#section": these links
+// render on every page via the shared Header/Footer, including /terms and
+// /privacy, which have no matching section on the page. A bare "#section"
+// on those pages just appends the hash to the current URL and goes nowhere;
+// "/#section" always resolves to the homepage section, from any page.
 export const navLinks = [
-  { label: "What We Do", href: "#what-we-do" },
-  { label: "Why Scout Labs", href: "#why-scout-labs" },
-  { label: "Contact", href: "#contact" },
+  { label: "What We Do", href: "/#what-we-do" },
+  { label: "Why Scout Labs", href: "/#why-scout-labs" },
+  { label: "Contact", href: "/#contact" },
 ] as const;
 
 export const hero = {
@@ -26,8 +31,10 @@ export const hero = {
   subhead:
     "Capabilities once reserved for large companies are now accessible to growing businesses. Scout Labs helps you choose and implement the right AI, automation, or software opportunity.",
   principle: "Increase sales. Reduce operating costs. Serve customers better.",
-  primaryCta: { label: "Get a free assessment", href: "#contact" },
-  secondaryCta: { label: "See what's possible", href: "#what-we-do" },
+  // Root-relative for the same reason as navLinks above — the header CTA
+  // that reuses primaryCta.href renders on /terms and /privacy too.
+  primaryCta: { label: "Get a free assessment", href: "/#contact" },
+  secondaryCta: { label: "See what's possible", href: "/#what-we-do" },
 } as const;
 
 export const whatWeDo = {
