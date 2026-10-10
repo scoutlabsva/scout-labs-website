@@ -18,7 +18,7 @@ export const lynchburgPage = {
     eyebrow: "Common Problems",
     headline: "Is the paperwork outgrowing the business?",
     description:
-      "We hear versions of the same story from service businesses around Lynchburg. If a few of these sound familiar, there's likely something worth automating.",
+      "These are common problems in owner-led service businesses. If a few sound familiar, there's likely something worth automating.",
     items: [
       "Your team spends hours each week retyping information from emails, forms, and phone calls.",
       "Estimate requests and customer questions wait too long for a response.",
@@ -98,7 +98,7 @@ export const lynchburgPage = {
     eyebrow: "Who We Help",
     headline: "Built for owner-led service businesses",
     description:
-      "If your business runs on phone calls, email, spreadsheets, and paperwork, there's probably something worth automating. We often work with:",
+      "If your business runs on phone calls, email, spreadsheets, and paperwork, there's probably something worth automating. Good fits include:",
     items: [
       "HVAC, plumbing, and electrical",
       "Contractors and builders",
