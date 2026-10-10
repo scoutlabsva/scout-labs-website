@@ -300,7 +300,7 @@ export function AssessmentForm({ onSubmitted }: { onSubmitted?: () => void }) {
           </p>
         )}
 
-        <div className="mt-6 flex items-center gap-4">
+        <div className="mt-6 flex flex-wrap items-center gap-4">
           {step === 2 && (
             <button type="button" onClick={() => setStep(1)} className="btn btn-sm btn-secondary">
               {assessmentForm.backLabel}
@@ -313,6 +313,7 @@ export function AssessmentForm({ onSubmitted }: { onSubmitted?: () => void }) {
                 ? assessmentForm.submittingLabel
                 : assessmentForm.submitLabel}
           </button>
+          {step === 1 && <p className="text-sm text-muted">{assessmentForm.reassurance}</p>}
         </div>
       </form>
     </div>

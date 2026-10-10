@@ -33,17 +33,18 @@ data, ever.
 | `assessment_step_completed` | `step_1`, `step_2` | Where do visitors stop before completing? |
 | `assessment_submitted` | `initial_recommendation`, `schedule_conversation`, `still_exploring` | Which inquiries complete, and what do they want next? |
 | `assessment_error` | `validation_error`, `network_error`, `server_error` | Where does the form fail? |
-| `phone_clicked` | (none) | Not currently wired — no phone link exists on the site yet. Ready if one is added. |
-| `email_clicked` | (none) | Not currently wired — the former mailto CTA is now the assessment form. Ready if a standalone email link is added. |
+| `phone_clicked` | (none) | How many visitors tap the phone number (`ContactDetails` component: CTA bands, footer, assessment section, homepage local section)? |
+| `email_clicked` | (none) | How many visitors tap the email address (same `ContactDetails` locations)? |
 | `calendar_opened` | (none) | Not currently wired — no calendar link exists on the site yet. |
 | `share_clicked` | `footer`, `mobile_menu` | Which share entry point gets used? |
-| `primary_cta_clicked` | `header`, `hero` | Which "Get a free assessment" CTA gets used? |
-| `secondary_cta_clicked` | `hero` | Does "See what's possible" get used? |
+| `primary_cta_clicked` | `header`, `hero`, `mobile_menu`, `page_hero`, `cta_band` | Which assessment CTA gets used? Combine with the event's pathname to see which page drove it. |
+| `secondary_cta_clicked` | `hero`, `page_hero`, `cta_band` | Do the secondary paths (examples, how it works) get used? |
 
 The event and value allowlists are enforced **server-side** in
 `src/worker/allowlist.ts` — this is the actual security boundary, not the
 client. Requests with an unrecognized event, value, or pathname are rejected
-with `400`.
+with `400`. **When adding a page, add its path to `ALLOWED_PATHNAMES`**, or
+events from that page are silently dropped.
 
 ## Where to view or query the data
 

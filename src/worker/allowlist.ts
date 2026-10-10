@@ -12,11 +12,21 @@ export const EVENT_VALUES: Record<string, readonly string[]> = {
   email_clicked: [""],
   calendar_opened: [""],
   share_clicked: ["footer", "mobile_menu"],
-  primary_cta_clicked: ["header", "hero"],
-  secondary_cta_clicked: ["hero"],
+  primary_cta_clicked: ["header", "hero", "mobile_menu", "page_hero", "cta_band"],
+  secondary_cta_clicked: ["hero", "page_hero", "cta_band"],
 };
 
-export const ALLOWED_PATHNAMES = new Set(["/"]);
+// Every public page. Keep in sync with routes in src/lib/content.ts — an
+// event from a page missing here is silently dropped (400).
+export const ALLOWED_PATHNAMES = new Set([
+  "/",
+  "/ai-consulting-lynchburg-va",
+  "/business-process-automation",
+  "/automation-examples",
+  "/assessment",
+  "/privacy",
+  "/terms",
+]);
 export const DEVICE_CATEGORIES = new Set(["mobile", "tablet", "desktop"]);
 
 export const IMPROVE_FOCUS_VALUES = [

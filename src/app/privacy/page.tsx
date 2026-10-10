@@ -1,17 +1,13 @@
 import type { Metadata } from "next";
 import { LegalPage } from "@/components/legal-page";
 import { site } from "@/lib/content";
+import { pageMetadata } from "@/lib/seo";
 
 const title = "Privacy Policy";
 const description = `Privacy Policy for ${site.name}, including how we handle information collected through our website and SMS text messaging program.`;
 const effectiveDate = "August 24, 2026";
 
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: `${site.url}/privacy` },
-  openGraph: { title, description, url: `${site.url}/privacy` },
-};
+export const metadata: Metadata = pageMetadata({ title, description, path: "/privacy" });
 
 export default function PrivacyPage() {
   return (

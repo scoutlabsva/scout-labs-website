@@ -10,20 +10,22 @@ export function Hero() {
       <div className="mx-auto max-w-3xl">
         <p className="eyebrow mb-1.5 sm:mb-3">{hero.eyebrow}</p>
 
-        <h1 className="heading-display break-words text-balance text-[clamp(2.75rem,4vw_+_2rem,3rem)] leading-[1] sm:text-6xl sm:leading-[1.08] lg:text-6xl">
+        <h1 className="heading-display break-words text-balance text-[clamp(2.375rem,4vw_+_1.75rem,3rem)] leading-[1] sm:text-6xl sm:leading-[1.08] lg:text-6xl">
           {hero.headlineLines.map((line, i) => (
             <span
               key={line}
               className={
                 i > 0
-                  ? "text-muted text-[clamp(2.25rem,3.2vw_+_1.7rem,2.5rem)] leading-[1] sm:text-6xl sm:leading-[1.08] lg:text-6xl"
+                  ? "text-muted text-[clamp(2rem,3.2vw_+_1.5rem,2.5rem)] leading-[1] sm:text-6xl sm:leading-[1.08] lg:text-6xl"
                   : undefined
               }
             >
               {i > 0 && <br />}
-              {/* A non-breaking space before the last word keeps it glued to its
-                  neighbor, so narrow phones can never strand a single word alone. */}
-              {line.replace(/ (\S+)$/, " $1")}
+              {/* A non-breaking space before a short last word keeps it glued to
+                  its neighbor, so narrow phones never strand a single word alone.
+                  Long final words are left free to wrap, or the glued pair would
+                  overflow and break mid-word. */}
+              {line.replace(/ (\S{1,8})$/, " $1")}
             </span>
           ))}
         </h1>

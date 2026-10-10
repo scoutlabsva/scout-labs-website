@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { hero, navLinks } from "@/lib/content";
+import { usePathname } from "next/navigation";
+import { headerCta, navLinks } from "@/lib/content";
 import { ScoutMark } from "@/components/scout-mark";
 import { ScoutWordmark } from "@/components/scout-wordmark";
 import { ShareButton } from "@/components/share-button";
@@ -10,6 +11,7 @@ import { trackEvent } from "@/lib/analytics";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
@@ -25,20 +27,25 @@ export function Header() {
 
         <nav className="hidden items-center gap-6 md:flex" aria-label="Main">
           {navLinks.map((link) => (
-            <a key={link.href} href={link.href} className="nav-link">
+            <Link
+              key={link.href}
+              href={link.href}
+              aria-current={pathname === link.href ? "page" : undefined}
+              className="nav-link aria-[current=page]:text-foreground aria-[current=page]:decoration-scout-green"
+            >
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
         <div className="flex items-center gap-2">
-          <a
-            href={hero.primaryCta.href}
+          <Link
+            href={headerCta.href}
             onClick={() => trackEvent("primary_cta_clicked", "header")}
             className="btn btn-sm btn-primary hidden whitespace-nowrap sm:inline-flex"
           >
-            {hero.primaryCta.label}
-          </a>
+            {headerCta.label}
+          </Link>
 
           <button
             type="button"
@@ -68,18 +75,30 @@ export function Header() {
           <ul className="flex flex-col">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <a
+                <Link
                   href={link.href}
-                  className="block rounded-sm py-3 text-base text-muted outline-none transition-colors hover:text-foreground focus-visible:text-foreground focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  aria-current={pathname === link.href ? "page" : undefined}
+                  className="block rounded-sm py-3 text-base text-muted outline-none transition-colors hover:text-foreground focus-visible:text-foreground focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background aria-[current=page]:text-foreground"
                   onClick={() => setMenuOpen(false)}
                 >
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
 
-          <div className="mt-2 border-t border-border/60 pt-3">
+          <Link
+            href={headerCta.href}
+            onClick={() => {
+              trackEvent("primary_cta_clicked", "mobile_menu");
+              setMenuOpen(false);
+            }}
+            className="btn btn-lg btn-primary mt-3 w-full"
+          >
+            {headerCta.label}
+          </Link>
+
+          <div className="mt-4 border-t border-border/60 pt-3">
             <ShareButton className="py-2 text-base text-muted hover:text-foreground" location="mobile_menu" />
           </div>
         </nav>

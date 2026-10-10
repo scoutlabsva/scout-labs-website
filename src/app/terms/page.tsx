@@ -1,17 +1,13 @@
 import type { Metadata } from "next";
 import { LegalPage } from "@/components/legal-page";
 import { site } from "@/lib/content";
+import { pageMetadata } from "@/lib/seo";
 
 const title = "Terms of Service";
 const description = `Terms of Service for ${site.name}, including the terms of our SMS text messaging program.`;
 const effectiveDate = "August 24, 2026";
 
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: `${site.url}/terms` },
-  openGraph: { title, description, url: `${site.url}/terms` },
-};
+export const metadata: Metadata = pageMetadata({ title, description, path: "/terms" });
 
 export default function TermsPage() {
   return (

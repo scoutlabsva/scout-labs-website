@@ -41,10 +41,17 @@ committed.
 
 ```
 src/app/            Routes, root layout, metadata, favicon (icon.svg)
-src/components/      One component per homepage section, plus small shared
-                     pieces (SectionIntro, StepNode, ScoutMark, ScoutWordmark,
-                     ScoutDiamond, ScoutChevron)
-src/lib/content.ts   All page copy, as typed constants
+                     /                            homepage
+                     /ai-consulting-lynchburg-va  local landing page
+                     /business-process-automation services page
+                     /automation-examples         illustrative examples
+                     /assessment                  free assessment (the form)
+src/components/      Homepage sections, plus shared pieces: PageHero, Section,
+                     CtaBand, Faq, ProcessSteps, ContactDetails, TrackedLink,
+                     TextLink, JsonLd, SectionIntro, StepNode, ScoutMark, etc.
+src/lib/content.ts   Site-wide facts (name, phone, routes) and homepage copy
+src/lib/pages/       Copy for each inner page, as typed constants
+src/lib/seo.ts       pageMetadata() helper and schema.org structured data
 src/lib/scout-colors.ts  Shared Scout Mark facet colors
 public/logo/         Approved production brand assets (see logo-usage.md)
 design-reference/    Internal design references — not served, not production
@@ -68,3 +75,21 @@ or navigation. See the comments in `globals.css` for the full rationale.
 The approved Scout Mark lives in `public/logo/`. `design-reference/logo-usage.md`
 documents which file to use where. Do not alter the mark's geometry; add a
 new purpose-named file if a genuinely new variant is needed.
+
+## Adding a page
+
+1. Add the route to `routes` in `src/lib/content.ts` and its copy to
+   `src/lib/pages/`.
+2. Build metadata with `pageMetadata()` from `src/lib/seo.ts`, which sets
+   the canonical URL, Open Graph, and Twitter tags together.
+3. Add it to `src/app/sitemap.ts` and to `ALLOWED_PATHNAMES` in
+   `src/worker/allowlist.ts` (or its analytics events are rejected).
+
+## Automation examples and case studies
+
+`src/lib/pages/examples.ts` holds the examples. Every entry has a `kind`:
+`"illustrative"` (what Scout Labs *could* build) or `"case-study"` (real,
+client-approved work, with an optional `outcome`). The page labels each
+entry by kind. Only use `"case-study"` for verified client work.
+
+See `docs/growth-plan.md` for the content and measurement plan.

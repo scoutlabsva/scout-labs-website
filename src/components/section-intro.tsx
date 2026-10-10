@@ -11,14 +11,14 @@ export function SectionIntro({
 }: {
   eyebrow: string;
   headline: string;
-  description: string;
+  description?: string;
   className?: string;
 }) {
   return (
     <div className={className}>
       <p className="eyebrow">{eyebrow}</p>
       <h2 className="heading-section mt-4">{headline}</h2>
-      <p className="body-copy mt-6">{description}</p>
+      {description && <p className="body-copy mt-6">{description}</p>}
     </div>
   );
 }
