@@ -60,7 +60,7 @@ export const headerCta = { label: "Get a free assessment", href: routes.assessme
 export const hero = {
   eyebrow: "AI & automation consulting · Central Virginia",
   headlineLines: [
-    "Practical AI for local businesses.",
+    "Practical AI for Lynchburg businesses.",
     "We'll show you where to start.",
   ] as const,
   subhead:
