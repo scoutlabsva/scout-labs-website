@@ -54,8 +54,11 @@ order:
 6. **Five tasks Lynchburg-area businesses can automate this year**: local
    angle, good to share with the chamber and on LinkedIn.
 
-To add a blog later, a single `/insights/[slug]` route with Markdown files
-is enough; skip a CMS.
+Articles go in `content/guides/` as Markdown files and publish at
+`/guides/<filename>` (see "Writing a guide" in the README). The first one,
+"What to automate first in a small service business," covers topic 1.
+After publishing, share a short summary on LinkedIn and the Google
+Business Profile with a link back to the article.
 
 **Biggest lever over time:** replace illustrative examples with real case
 studies (`kind: "case-study"`) as soon as a client agrees, and ask every

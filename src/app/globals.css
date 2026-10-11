@@ -159,6 +159,57 @@ body {
   .legal-copy strong {
     @apply font-semibold text-foreground;
   }
+
+  /* Guide articles (rendered Markdown): larger, darker body text than the
+     legal pages, since these are meant to be read start to finish. */
+  .article-copy {
+    @apply text-lg leading-relaxed text-foreground/85;
+  }
+
+  .article-copy h2 {
+    @apply mt-12 text-3xl font-semibold tracking-tight text-balance text-foreground first:mt-0;
+  }
+
+  .article-copy h3 {
+    @apply mt-8 text-xl font-semibold tracking-tight text-foreground;
+  }
+
+  .article-copy p {
+    @apply mt-5 first:mt-0;
+  }
+
+  .article-copy ul,
+  .article-copy ol {
+    @apply mt-5 space-y-2 pl-6;
+  }
+
+  .article-copy ul {
+    @apply list-disc;
+  }
+
+  .article-copy ol {
+    @apply list-decimal;
+  }
+
+  .article-copy li::marker {
+    @apply text-muted-subtle;
+  }
+
+  .article-copy a {
+    @apply font-medium text-accent underline decoration-accent/30 decoration-2 underline-offset-4 transition-colors hover:decoration-accent;
+  }
+
+  .article-copy strong {
+    @apply font-semibold text-foreground;
+  }
+
+  .article-copy blockquote {
+    @apply mt-8 border-l-2 border-scout-green pl-5 text-foreground;
+  }
+
+  .article-copy hr {
+    @apply my-12 border-border;
+  }
 }
 
 /* Hero illustration: one quiet, single-shot reveal — not a loop, nothing pulses or bounces. */

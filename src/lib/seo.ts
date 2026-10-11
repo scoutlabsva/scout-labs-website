@@ -16,17 +16,20 @@ export const ogImage = {
  *
  * `title` is the page-specific part; the layout's template appends
  * "| Scout Labs". Pass `absoluteTitle` to skip the template (homepage).
+ * Pass `article` for guides so Open Graph marks them as articles.
  */
 export function pageMetadata({
   title,
   description,
   path,
   absoluteTitle = false,
+  article,
 }: {
   title: string;
   description: string;
   path: string;
   absoluteTitle?: boolean;
+  article?: { publishedTime: string; modifiedTime?: string };
 }): Metadata {
   const url = path === "/" ? site.url : `${site.url}${path}`;
   const fullTitle = absoluteTitle ? title : `${title} | ${site.name}`;
@@ -40,9 +43,11 @@ export function pageMetadata({
       description,
       url,
       siteName: site.name,
-      type: "website",
       locale: "en_US",
       images: [ogImage],
+      ...(article
+        ? { type: "article", ...article, authors: [site.founder] }
+        : { type: "website" }),
     },
     twitter: {
       card: "summary_large_image",
@@ -118,13 +123,56 @@ export function serviceSchema({
   };
 }
 
-export function breadcrumbSchema(name: string, path: string) {
+/**
+ * Home → (optional parent) → this page. Guides pass the Guides index as
+ * the parent.
+ */
+export function breadcrumbSchema(
+  name: string,
+  path: string,
+  parent?: { name: string; path: string },
+) {
+  const trail = [
+    { name: "Home", item: site.url },
+    ...(parent ? [{ name: parent.name, item: `${site.url}${parent.path}` }] : []),
+    { name, item: `${site.url}${path}` },
+  ];
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: site.url },
-      { "@type": "ListItem", position: 2, name, item: `${site.url}${path}` },
-    ],
+    itemListElement: trail.map((entry, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      ...entry,
+    })),
+  };
+}
+
+export function articleSchema({
+  title,
+  description,
+  path,
+  date,
+  updated,
+}: {
+  title: string;
+  description: string;
+  path: string;
+  date: string;
+  updated?: string;
+}) {
+  const url = `${site.url}${path}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: title,
+    description,
+    url,
+    mainEntityOfPage: url,
+    image: `${site.url}${ogImage.url}`,
+    datePublished: date,
+    dateModified: updated ?? date,
+    author: { "@type": "Person", name: site.founder, url: `${site.url}/#about` },
+    publisher: { "@id": businessId },
   };
 }

@@ -1,9 +1,9 @@
 import {
-  ALLOWED_PATHNAMES,
   BUSINESS_AREA_VALUES,
   DEVICE_CATEGORIES,
   EVENT_VALUES,
   IMPROVE_FOCUS_VALUES,
+  isAllowedPathname,
   PREFERRED_NEXT_STEP_VALUES,
   TEAM_SIZE_VALUES,
 } from "./allowlist";
@@ -93,7 +93,7 @@ async function handleEvents(request: Request, env: Env, ctx: ExecutionContext): 
   if (!allowedValues.includes(value)) return json({ error: "unknown_value" }, 400);
 
   const pathname = cleanPathname(body.pathname);
-  if (!ALLOWED_PATHNAMES.has(pathname)) return json({ error: "unknown_pathname" }, 400);
+  if (!isAllowedPathname(pathname)) return json({ error: "unknown_pathname" }, 400);
 
   if (!isValidSessionId(body.sessionId)) return json({ error: "invalid_session" }, 400);
   const sessionId = body.sessionId as string;

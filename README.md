@@ -85,6 +85,28 @@ new purpose-named file if a genuinely new variant is needed.
 3. Add it to `src/app/sitemap.ts` and to `ALLOWED_PATHNAMES` in
    `src/worker/allowlist.ts` (or its analytics events are rejected).
 
+## Writing a guide
+
+Guides live at `/guides` and are plain Markdown files in `content/guides/`.
+To publish one, add a file named with lowercase words and hyphens (the
+filename becomes the URL):
+
+```md
+---
+title: How much does small business automation cost?
+description: One or two sentences for search results and the guides list.
+date: 2026-11-15
+---
+
+Article text in Markdown. Use ## for section headings and link to
+[the assessment](/assessment) where it fits naturally.
+```
+
+Optional front matter: `updated: YYYY-MM-DD` after a meaningful revision,
+and `draft: true` to keep a file out of the build. The sitemap, article
+schema, and analytics allowlist pick new guides up automatically; just
+build and deploy.
+
 ## Automation examples and case studies
 
 `src/lib/pages/examples.ts` holds the examples. Every entry has a `kind`:

@@ -24,9 +24,19 @@ export const ALLOWED_PATHNAMES = new Set([
   "/business-process-automation",
   "/automation-examples",
   "/assessment",
+  "/guides",
   "/privacy",
   "/terms",
 ]);
+
+// Guide articles are added as Markdown files without touching the Worker,
+// so they're matched by shape rather than listed one by one.
+const GUIDE_PATHNAME = /^\/guides\/[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+export function isAllowedPathname(pathname: string): boolean {
+  return ALLOWED_PATHNAMES.has(pathname) || GUIDE_PATHNAME.test(pathname);
+}
+
 export const DEVICE_CATEGORIES = new Set(["mobile", "tablet", "desktop"]);
 
 export const IMPROVE_FOCUS_VALUES = [

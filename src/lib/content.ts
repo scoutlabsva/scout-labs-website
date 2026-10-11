@@ -23,6 +23,7 @@ export const routes = {
   automation: "/business-process-automation",
   examples: "/automation-examples",
   assessment: "/assessment",
+  guides: "/guides",
   privacy: "/privacy",
   terms: "/terms",
 } as const;
@@ -50,6 +51,7 @@ export const footerLinks = [
   { label: "Business process automation", href: routes.automation },
   { label: "Automation examples", href: routes.examples },
   { label: "Free automation assessment", href: routes.assessment },
+  { label: "Guides", href: routes.guides },
   { label: "About Scout Labs", href: "/#about" },
 ] as const;
 

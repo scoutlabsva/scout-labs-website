@@ -43,7 +43,7 @@ data, ever.
 The event and value allowlists are enforced **server-side** in
 `src/worker/allowlist.ts` — this is the actual security boundary, not the
 client. Requests with an unrecognized event, value, or pathname are rejected
-with `400`. **When adding a page, add its path to `ALLOWED_PATHNAMES`**, or
+with `400`. **When adding a page, add its path to `ALLOWED_PATHNAMES`** (guide articles under `/guides/` are matched automatically), or
 events from that page are silently dropped.
 
 ## Where to view or query the data
