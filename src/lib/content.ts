@@ -60,8 +60,8 @@ export const headerCta = { label: "Get a free assessment", href: routes.assessme
 export const hero = {
   eyebrow: "AI & automation consulting · Central Virginia",
   headlineLines: [
-    "Practical AI for Lynchburg\u2011area small businesses.",
-    "The challenge is knowing where to start.",
+    "Practical AI for local businesses.",
+    "We'll show you where to start.",
   ] as const,
   subhead:
     "Scout Labs helps businesses in Lynchburg, Forest, Bedford, and surrounding communities eliminate repetitive work, streamline operations, and make better use of AI. We work directly with owners to find the opportunities worth pursuing, then build them.",
